@@ -12,6 +12,11 @@ focus on speed, great mobility and a wide array of player abilities. The game sh
 offer a lot of content due to its complexity, while remaining feather-weight, running
 fast and using system resources sparingly.
 
+## Dependencies
+
+- [SDL2](https://libsdl.org)
+- [RND\_Game](https://github.com/randoragon/randoutils/tree/master/c-libs/game)
+
 ## Installation
 
 Run the following (if necessary, as root):
