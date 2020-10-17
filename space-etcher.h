@@ -11,7 +11,10 @@
 
 // Functions
 int main(int argc, char *argv[0]);
-int gameloop();
+void init();
+void loadResources();
+void gameloop();
+void cleanup();
 
 // Global variables
 SDL_Window *window;
