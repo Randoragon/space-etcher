@@ -20,8 +20,8 @@ void init()
     window = SDL_CreateWindow("Space Etcher",
             SDL_WINDOWPOS_UNDEFINED,
             SDL_WINDOWPOS_UNDEFINED,
-            SCREEN_WIDTH,
-            SCREEN_HEIGHT,
+            CANVAS_WIDTH,
+            CANVAS_HEIGHT,
             SDL_WINDOW_SHOWN);
     if (window == NULL) {
         RND_ERROR("Failed to create window (%s)\n", SDL_GetError());
