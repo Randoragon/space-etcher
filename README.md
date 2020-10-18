@@ -12,6 +12,19 @@ focus on speed, great mobility and a wide array of player abilities. The game sh
 offer a lot of content due to its complexity, while remaining feather-weight, running
 fast and using system resources sparingly.
 
+## Documentation
+
+I try to maintain a [Doxygen](https://www.doxygen.nl) documentation in the comments.
+Things may be outdated here and there, but it is generally the best way of examining
+the code base without actually looking at source code. The Doxyfile contains configuration
+for the doxygen utility, to generate a `docs` directory containing the documentation
+simply run
+
+    doxygen
+
+from the project's root directory. Then you can open the `docs/html/index.html` file
+in your web browser.
+
 ## Dependencies
 
 - [SDL2](https://libsdl.org)
