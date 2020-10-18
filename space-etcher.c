@@ -7,14 +7,13 @@
 #include "space-etcher.h"
 
 extern SDL_Window *window;
-extern SDL_Surface *surface;
+extern SDL_Renderer *renderer;
 extern bool running;
+extern SDL_Event input;
 
 void init()
 {
-    window = NULL;
-    surface = NULL;
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         RND_ERROR("Failed to initialize SDL (%s)\n", SDL_GetError());
         exit(1);
     }
@@ -28,7 +27,11 @@ void init()
         RND_ERROR("Failed to create window (%s)\n", SDL_GetError());
         exit(1);
     }
-    surface = SDL_GetWindowSurface(window);
+    renderer = SDL_CreateRenderer(window, -1, 0);
+    if (renderer == NULL) {
+        RND_ERROR("Failed to create renderer (%s)\n", SDL_GetError());
+        exit(1);
+    }
     running = true;
     if (RND_gameInit()) {
         RND_ERROR("Failed to initialize RND_Game\n");
@@ -38,21 +41,41 @@ void init()
 
 void loadResources()
 {
-
 }
 
 void gameloop()
 {
     while (running) {
-        SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0x00, 0x00, 0x00));
-        SDL_UpdateWindowSurface(window);
-        running = false;
+        listen();
+        step();
+        draw();
+        SDL_Delay(1000 / FPS);
     }
+}
+
+void listen()
+{
+    while (SDL_PollEvent(&input) > 0) {
+        if (input.type == SDL_QUIT) {
+            running = false;
+        }
+    }
+}
+
+void step()
+{
+}
+
+void draw()
+{
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderClear(renderer);
+    SDL_RenderPresent(renderer);
 }
 
 void cleanup()
 {
-    SDL_FreeSurface(surface);
+    SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
     RND_gameCleanup();
