@@ -20,3 +20,8 @@ clean:
 install: CFLAGS += -O3
 install: clean all
 	cp -- $(OUT) $(DESTDIR)$(PREFIX)/
+
+docs: FORCE
+	doxygen Doxyfile
+
+FORCE: ;
