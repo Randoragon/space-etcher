@@ -118,6 +118,11 @@ EventSnapshot *eventSnapshotCreate();
  */
 int eventSnapshotDestroy(EventSnapshot *es);
 
+/** Handles key presses/releases and updates the @ref events
+ * and @ref events_prev variables.
+ */
+void handleKey(SDL_KeyboardEvent kev);
+
 /***********************************************************
  *                   GLOBAL VARIABLES                      *
  ***********************************************************/

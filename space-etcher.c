@@ -66,8 +66,15 @@ void listen()
 {
     SDL_Event ev;
     while (SDL_PollEvent(&ev) > 0) {
-        if (ev.type == SDL_QUIT) {
-            running = false;
+        switch(ev.type) {
+            case SDL_QUIT:
+                running = false;
+                break;
+            case SDL_KEYDOWN: case SDL_KEYUP:
+                handleKey(ev.key);
+                break;
+            default:
+                break;
         }
     }
 }
@@ -123,6 +130,32 @@ int eventSnapshotDestroy(EventSnapshot *es)
     return 0;
 }
 
+void handleKey(SDL_KeyboardEvent kev)
+{
+    if (kev.repeat) {
+        return;
+    }
+    size_t index;
+    bool   pressed;
+    switch(kev.keysym.sym) {
+        case SDLK_LEFT:
+            index = 0;
+            break;
+        case SDLK_UP:
+            index = 1;
+            break;
+        case SDLK_RIGHT:
+            index = 2;
+            break;
+        case SDLK_DOWN:
+            index = 3;
+            break;
+        default:
+            return;
+    }
+    pressed = (kev.state == SDL_PRESSED)? true : false; 
+    RND_bitMapSet(events->keyboard, index, pressed);
+}
 int main(int argc, char *argv[])
 {
     init();
