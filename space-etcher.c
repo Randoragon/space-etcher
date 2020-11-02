@@ -6,10 +6,10 @@
 
 #include "space-etcher.h"
 
-extern SDL_Window *window;
-extern SDL_Renderer *renderer;
-extern bool running;
-extern SDL_Event input;
+SDL_Window *window;
+SDL_Renderer *renderer;
+bool running;
+EventSnapshot *events, *events_prev;
 
 void init()
 {
@@ -32,11 +32,19 @@ void init()
         RND_ERROR("Failed to create renderer (%s)\n", SDL_GetError());
         exit(1);
     }
-    running = true;
+    if (!(events = calloc(1, sizeof(EventSnapshot)))) {
+        RND_ERROR("calloc");
+        exit(1);
+    }
+    if (!(events_prev = calloc(1, sizeof(EventSnapshot)))) {
+        RND_ERROR("calloc");
+        exit(1);
+    }
     if (RND_gameInit()) {
         RND_ERROR("Failed to initialize RND_Game\n");
         exit(1);
     }
+    running = true;
 }
 
 void loadResources()
@@ -55,8 +63,9 @@ void gameloop()
 
 void listen()
 {
-    while (SDL_PollEvent(&input) > 0) {
-        if (input.type == SDL_QUIT) {
+    SDL_Event ev;
+    while (SDL_PollEvent(&ev) > 0) {
+        if (ev.type == SDL_QUIT) {
             running = false;
         }
     }

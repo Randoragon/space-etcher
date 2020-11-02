@@ -14,6 +14,35 @@
 #define FPS 60
 
 
+/********************************************************
+ *                      STRUCTURES                      *
+ ********************************************************/
+
+/// @cond
+typedef struct EventSnapshot EventSnapshot;
+/// @endcond
+
+/** Holds a single snapshot of all events handled by @ref listen.
+ *
+ * To make it easy to check if a key is pressed, or some other
+ * event type has occurred, each game loop calls the @ref listen
+ * function, which handles the SDL event queue and stores the
+ * results inside two global variables (@ref events and @ref
+ * events_prev). With this thin extra layer of abstraction,
+ * other functions can easily tap into these structures to obtain
+ * information (for example about the keyboard state). The
+ * contents of this struct are custom-tailored to the game's
+ * needs, i.e. only the information needed by the game is stored,
+ * and if someone were to introduce some new keybinding, they
+ * would have to add that key to this struct and update @ref
+ * listen to store its information in @ref events and @ref 
+ * events_prev.
+ */
+struct EventSnapshot
+{
+
+};
+
 /***********************************************************
  *                       FUNCTIONS                         *
  ***********************************************************/
@@ -76,15 +105,24 @@ void cleanup();
  ***********************************************************/
 
 /// The main SDL2 game window.
-SDL_Window *window;
+extern SDL_Window *window;
 
 /// The renderer for @ref window.
-SDL_Renderer *renderer;
+extern SDL_Renderer *renderer;
 
-/// This variable holds the results of the last @ref listen run.
-SDL_Event input;
+/** Points to the results of the last @ref listen run.
+  * It can be used in conjunction with @ref events_prev for example
+  * to check for individual button presses.
+  */
+extern EventSnapshot *events;
+
+/** Points to the results of the second last @ref listen run.
+  * It can be used in conjunction with @ref events for example to check
+  * for individual button presses.
+  */
+extern EventSnapshot *events_prev;
 
 /// The program will @ref cleanup and exit when this is set to @c false.
-bool running;
+extern bool running;
 
 #endif /* SPACE_ETCHER_H */
