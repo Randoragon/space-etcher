@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Og -g
-LDFLAGS = -lSDL2 -lrnd_game
+LDFLAGS = -lSDL2 -lrnd_game -lrnd_bitmap
 OBJS = space-etcher.o
 OUT = space-etcher
 DESTDIR = 

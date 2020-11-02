@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <stdbool.h>
+#include <RND_BitMap.h>
 
 
 /***********************************************************
@@ -40,7 +41,8 @@ typedef struct EventSnapshot EventSnapshot;
  */
 struct EventSnapshot
 {
-
+    /// Binary values representing individual key states.
+    RND_BitMap *keyboard;
 };
 
 /***********************************************************
@@ -99,6 +101,22 @@ void draw();
  */
 void cleanup();
 
+/** Allocates and initializes a new EventSnapshot structure.
+ *
+ * @returns 
+ * - pointer to the new struct - success
+ * - @c NULL - insufficient memory
+ */
+EventSnapshot *eventSnapshotCreate();
+
+/** Frees all memory associated with an EventSnapshot.
+ *
+ * @param es A pointer to the snapshot.
+ * @returns
+ * - 0 - success
+ * - 1 - failure
+ */
+int eventSnapshotDestroy(EventSnapshot *es);
 
 /***********************************************************
  *                   GLOBAL VARIABLES                      *

@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <RND_Game.h>
 #include <RND_ErrMsg.h>
+#include <RND_BitMap.h>
 
 #include "space-etcher.h"
 
@@ -32,12 +33,12 @@ void init()
         RND_ERROR("Failed to create renderer (%s)\n", SDL_GetError());
         exit(1);
     }
-    if (!(events = calloc(1, sizeof(EventSnapshot)))) {
-        RND_ERROR("calloc");
+    if (!(events = eventSnapshotCreate())) {
+        RND_ERROR("Failed to create EventSnapshot\n");
         exit(1);
     }
-    if (!(events_prev = calloc(1, sizeof(EventSnapshot)))) {
-        RND_ERROR("calloc");
+    if (!(events_prev = eventSnapshotCreate())) {
+        RND_ERROR("Failed to create EventSnapshot\n");
         exit(1);
     }
     if (RND_gameInit()) {
@@ -88,6 +89,38 @@ void cleanup()
     SDL_DestroyWindow(window);
     SDL_Quit();
     RND_gameCleanup();
+    eventSnapshotDestroy(events);
+    eventSnapshotDestroy(events_prev);
+}
+
+EventSnapshot *eventSnapshotCreate()
+{
+    EventSnapshot *ret;
+    if (!(ret = malloc(sizeof(EventSnapshot)))) {
+        RND_ERROR("malloc");
+        return NULL;
+    }
+    if (!(ret->keyboard = RND_bitMapCreate(4))) {
+        RND_ERROR("Failed to create bitmap\n");
+        free(ret);
+        return NULL;
+    }
+    return ret;
+}
+
+int eventSnapshotDestroy(EventSnapshot *es)
+{
+    if (!es) {
+        RND_ERROR("es is NULL");
+        return 1;
+    }
+    int code;
+    if ((code = RND_bitMapDestroy(es->keyboard))) {
+        RND_ERROR("Failed to destroy bitmap (RND_bitMapDestroy returned %d)\n", code);
+        return 1;
+    }
+    free(es);
+    return 0;
 }
 
 int main(int argc, char *argv[])
