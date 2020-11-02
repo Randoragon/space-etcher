@@ -60,12 +60,18 @@ void init();
 /// Loads default game resources into memory.
 void loadResources();
 
+/// Executes code that needs to be run once before @ref gameLoop.
+void gameBegin();
+
 /** Enters the game event loop.
  *
  * The loop calls @ref listen, @ref step and @ref draw functions
  * respectively, and repeats itself at @ref FPS frames per second.
  */
-void gameloop();
+void gameLoop();
+
+/// Executes code that needs to be run once after @ref gameLoop ends.
+void gameEnd();
 
 /** Handles all enqueued SDL2 events.
  *
@@ -80,7 +86,7 @@ void listen();
 /** Executes code based on the last @ref listen results.
  *
  * This function should only ever be called once per game step
- * inside the @ref gameloop function, it advances the game
+ * inside the @ref gameLoop function, it advances the game
  * by one tick based on the previous step and the latest event
  * data (obtained by @ref listen).
  */
@@ -89,7 +95,7 @@ void step();
 /** Draws the current game state to the screen.
  *
  * This function updates the screen, and along with @ref listen
- * and @ref step is one of the vital components of @ref gameloop.
+ * and @ref step is one of the vital components of @ref gameLoop.
  * It should be called after @ref step, because the state of
  * all object variables etc. should be up-to-date.
  */

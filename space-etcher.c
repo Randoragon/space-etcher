@@ -52,7 +52,11 @@ void loadResources()
 {
 }
 
-void gameloop()
+void gameBegin()
+{
+}
+
+void gameLoop()
 {
     while (running) {
         listen();
@@ -60,6 +64,10 @@ void gameloop()
         draw();
         SDL_Delay(1000 / FPS);
     }
+}
+
+void gameEnd()
+{
 }
 
 void listen()
@@ -160,7 +168,9 @@ int main(int argc, char *argv[])
 {
     init();
     loadResources();
-    gameloop();
+    gameBegin();
+    gameLoop();
+    gameEnd();
     cleanup();
 
     return EXIT_SUCCESS;
