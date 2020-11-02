@@ -6,6 +6,7 @@
 #include <RND_BitMap.h>
 
 #include "space-etcher.h"
+#include "objs/include.h"
 
 SDL_Window *window;
 SDL_Renderer *renderer;
@@ -45,6 +46,7 @@ void init()
         RND_ERROR("Failed to initialize RND_Game\n");
         exit(1);
     }
+    RND_GAME_OBJECT_ADD(ObjPlayer, OBJI_PLAYER);
     running = true;
 }
 

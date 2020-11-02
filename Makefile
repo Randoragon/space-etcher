@@ -6,7 +6,7 @@ OUT = space-etcher
 DESTDIR = 
 PREFIX = /usr/local/bin
 
-all: main
+all: gen main
 
 main: $(OBJS)
 	$(CC) $(LDFLAGS) $(OBJS) -o $(OUT)
@@ -23,5 +23,8 @@ install: clean all
 
 docs: FORCE
 	doxygen Doxyfile
+
+gen: FORCE
+	./objs/gen-include.sh
 
 FORCE: ;
