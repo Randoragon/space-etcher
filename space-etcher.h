@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <stdbool.h>
 #include <RND_BitMap.h>
+#include <RND_Game.h>
 
 
 /***********************************************************
@@ -153,5 +154,8 @@ extern EventSnapshot *events_prev;
 
 /// The program will @ref cleanup and exit when this is set to @c false.
 extern bool running;
+
+/// Stores per-object code for instances that is executed during @ref step.
+extern RND_GameHandler *step_handler;
 
 #endif /* SPACE_ETCHER_H */

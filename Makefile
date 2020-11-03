@@ -1,7 +1,8 @@
 CC = gcc
 CFLAGS = -Og -g
-LDFLAGS = -lSDL2 -lrnd_game -lrnd_bitmap
-OBJS = space-etcher.o
+LDFLAGS = -lSDL2 -lrnd_game -lrnd_bitmap -lrnd_priorityqueue -lrnd_linkedlist
+SRCS = $(wildcard *.c) $(wildcard objs/*.c)
+OBJS = $(patsubst %.c, %.o, $(SRCS))
 OUT = space-etcher
 DESTDIR = 
 PREFIX = /usr/local/bin
@@ -15,7 +16,7 @@ main: $(OBJS)
 	$(CC) -c $(CFLAGS) $^ -o $@
 
 clean:
-	rm -f *.o
+	rm -f *.o objs/*.o
 
 install: CFLAGS += -O3
 install: clean all

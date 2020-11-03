@@ -12,6 +12,7 @@ SDL_Window *window;
 SDL_Renderer *renderer;
 bool running;
 EventSnapshot *events, *events_prev;
+RND_GameHandler *step_handler;
 
 void init()
 {
@@ -47,6 +48,9 @@ void init()
         exit(1);
     }
     RND_GAME_OBJECT_ADD(ObjPlayer, OBJI_PLAYER);
+    RND_ctors[OBJI_PLAYER] = objPlayerCtor;
+    step_handler = RND_gameHandlerCreate(NULL);
+    RND_gameHandlerAdd(step_handler, OBJI_PLAYER, objPlayerStep);
     running = true;
 }
 
@@ -56,6 +60,7 @@ void loadResources()
 
 void gameBegin()
 {
+    RND_gameInstanceSpawn(OBJI_PLAYER);
 }
 
 void gameLoop()
@@ -91,6 +96,7 @@ void listen()
 
 void step()
 {
+    RND_gameHandlerRun(step_handler);
 }
 
 void draw()
@@ -146,7 +152,7 @@ void handleKey(SDL_KeyboardEvent kev)
         return;
     }
     size_t index;
-    bool   pressed;
+    bool   pressed, prev;
     switch(kev.keysym.sym) {
         case SDLK_LEFT:
             index = 0;
@@ -164,8 +170,11 @@ void handleKey(SDL_KeyboardEvent kev)
             return;
     }
     pressed = (kev.state == SDL_PRESSED)? true : false; 
+    prev    = RND_bitMapGet(events->keyboard, index);
+    RND_bitMapSet(events_prev->keyboard, index, prev);
     RND_bitMapSet(events->keyboard, index, pressed);
 }
+
 int main(int argc, char *argv[])
 {
     init();
