@@ -40,26 +40,23 @@ void handleKey(SDL_KeyboardEvent kev)
         return;
     }
     size_t index;
-    bool   pressed, prev;
+    bool   pressed;
     switch(kev.keysym.sym) {
         case SDLK_LEFT:
-            index = 0;
+            index = KEY_LEFT;
             break;
         case SDLK_UP:
-            index = 1;
+            index = KEY_JUMP;
             break;
         case SDLK_RIGHT:
-            index = 2;
+            index = KEY_RIGHT;
             break;
         case SDLK_DOWN:
-            index = 3;
+            index = KEY_CROUCH;
             break;
         default:
             return;
     }
     pressed = (kev.state == SDL_PRESSED)? true : false; 
-    prev    = RND_bitMapGet(events->keyboard, index);
-    RND_bitMapSet(events_prev->keyboard, index, prev);
     RND_bitMapSet(events->keyboard, index, pressed);
 }
-

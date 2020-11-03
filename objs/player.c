@@ -15,8 +15,8 @@ int objPlayerCtor(void *obj)
 int objPlayerStep(void *obj)
 {
     ObjPlayer *o = obj;
-    o->x += 10 * (RND_bitMapGet(events->keyboard, 2) - RND_bitMapGet(events->keyboard, 0));
-    o->y += 10 * (RND_bitMapGet(events->keyboard, 3) - RND_bitMapGet(events->keyboard, 1));
+    o->x += 10 * (keyIsDown(KEY_RIGHT) - keyIsDown(KEY_LEFT));
+    o->y += 10 * (keyIsDown(KEY_CROUCH) - keyIsDown(KEY_JUMP));
     return 0;
 }
 

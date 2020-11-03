@@ -81,6 +81,10 @@ void gameEnd()
 
 void listen()
 {
+    for (int i = 0; i < KEY_SIZE; i++) {
+        bool last = keyIsDown(i);
+        RND_bitMapSet(events_prev->keyboard, i, last);
+    }
     SDL_Event ev;
     while (SDL_PollEvent(&ev) > 0) {
         switch(ev.type) {

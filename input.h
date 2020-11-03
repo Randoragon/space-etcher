@@ -10,6 +10,28 @@
 #include <RND_BitMap.h>
 
 
+/***********************************************************
+ *                       CONSTANTS                         *
+ ***********************************************************/
+
+/** This enum maps keys to array indices.
+ *
+ * @c SDLK_* macros are good for determining keysyms,
+ * but their numerical values aren't suited to be array
+ * indices, because they're all over the place. The values
+ * contained in this enum are used to access the @ref
+ * EventSnapshot::keyboard arrays of @ref events and @ref
+ * events_prev.
+ */
+typedef enum EKeyIndex
+{
+    KEY_JUMP,
+    KEY_LEFT,
+    KEY_RIGHT,
+    KEY_CROUCH,
+    KEY_SIZE     /* KEY_SIZE needs to be last */
+} EKeyIndex;
+
 /********************************************************
  *                      STRUCTURES                      *
  ********************************************************/
@@ -42,33 +64,6 @@ struct EventSnapshot
 
 
 /***********************************************************
- *                       FUNCTIONS                         *
- ***********************************************************/
-
-/** Allocates and initializes a new EventSnapshot structure.
- *
- * @returns 
- * - pointer to the new struct - success
- * - @c NULL - insufficient memory
- */
-EventSnapshot *eventSnapshotCreate();
-
-/** Frees all memory associated with an EventSnapshot.
- *
- * @param es A pointer to the snapshot.
- * @returns
- * - 0 - success
- * - 1 - failure
- */
-int eventSnapshotDestroy(EventSnapshot *es);
-
-/** Handles key presses/releases and updates the @ref events
- * and @ref events_prev variables.
- */
-void handleKey(SDL_KeyboardEvent kev);
-
-
-/***********************************************************
  *                   GLOBAL VARIABLES                      *
  ***********************************************************/
 
@@ -83,5 +78,95 @@ extern EventSnapshot *events;
   * for individual button presses.
   */
 extern EventSnapshot *events_prev;
+
+
+/***********************************************************
+ *                       FUNCTIONS                         *
+ ***********************************************************/
+
+/** Allocates and initializes a new EventSnapshot structure.
+ *
+ * @returns 
+ * - pointer to the new struct - success
+ * - @c NULL - insufficient memory
+ */
+EventSnapshot *eventSnapshotCreate();
+
+/** Frees all memory associated with an EventSnapshot.
+ *
+ * @param[in] es A pointer to the snapshot.
+ * @returns
+ * - 0 - success
+ * - 1 - failure
+ */
+int eventSnapshotDestroy(EventSnapshot *es);
+
+/** Handles key presses/releases and updates the @ref events
+ * and @ref events_prev variables.
+ */
+void handleKey(SDL_KeyboardEvent kev);
+
+/** Returns whether a key is being held down or not.
+ *
+ * This function only retrieves data from the
+ * @ref events variable, and therefore requires
+ * a preceding call to @ref listen, which updates
+ * the contents of @ref events and @ref events_prev.
+ *
+ * @param[in] key The unique key index.
+ * @returns
+ * - @c true - key is being held down
+ * - @c false - key is not being held down
+ */
+inline bool keyIsDown(EKeyIndex key)
+{
+    return RND_bitMapGet(events->keyboard, key);
+}
+
+/** Returns whether a key has just been pressed or not.
+ *
+ * A key is considered to "have just been pressed" if
+ * its state stored in @ref events_prev is @c false
+ * (not pressed), and its current state is @c true (pressed).
+ *
+ * This function only retrieves data from the @ref
+ * events and @ref events_prev variables, and therefore
+ * requires a preceding call to @ref listen, which
+ * updates the contents of @ref events and @ref
+ * events_prev.
+ *
+ * @param[in] key The unique key index.
+ * @returns
+ * - @c true - key has just been pressed
+ * - @c false - otherwise
+ */
+inline bool keyIsPressed(EKeyIndex key)
+{
+    return RND_bitMapGet(events->keyboard, key) &&
+        !RND_bitMapGet(events_prev->keyboard, key);
+}
+
+/** Returns whether a key has just been released or not.
+ *
+ * A key is considered to "have just been released" if
+ * its state stored in @ref events_prev is @c true
+ * (pressed), and its current state is @c false (not pressed).
+ *
+ * This function only retrieves data from the @ref
+ * events and @ref events_prev variables, and therefore
+ * requires a preceding call to @ref listen, which
+ * updates the contents of @ref events and @ref
+ * events_prev.
+ *
+ * @param[in] key The unique key index.
+ * @returns
+ * - @c true - key has just been released
+ * - @c false - otherwise
+ */
+inline bool keyIsReleased(EKeyIndex key)
+{
+    return !RND_bitMapGet(events->keyboard, key) &&
+        RND_bitMapGet(events_prev->keyboard, key);
+}
 
 #endif // INPUT_H
