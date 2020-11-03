@@ -12,8 +12,6 @@ typedef struct ObjPlayer
     double x, y;
 } ObjPlayer;
 
-extern EventSnapshot *events;
-
 int objPlayerCtor(void *obj);
 int objPlayerStep(void *obj);
 int objPlayerDraw(void *obj);

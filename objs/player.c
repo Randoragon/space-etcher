@@ -1,6 +1,8 @@
 #include <SDL2/SDL.h>
+
 #include "../space-etcher.h"
 #include "player.h"
+#include "../input.h"
 
 int objPlayerCtor(void *obj)
 {
