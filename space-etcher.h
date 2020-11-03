@@ -159,7 +159,10 @@ extern EventSnapshot *events_prev;
 /// The program will @ref cleanup and exit when this is set to @c false.
 extern bool running;
 
-/// Stores per-object code for instances that is executed during @ref step.
+/// Handler for instance step event, executed in @ref step.
 extern RND_GameHandler *step_handler;
+
+/// Handler for instance draw event, executed in @ref draw.
+extern RND_GameHandler *draw_handler;
 
 #endif /* SPACE_ETCHER_H */

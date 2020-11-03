@@ -12,7 +12,7 @@ SDL_Window *window;
 SDL_Renderer *renderer;
 bool running;
 EventSnapshot *events, *events_prev;
-RND_GameHandler *step_handler;
+RND_GameHandler *step_handler, *draw_handler;
 
 void init()
 {
@@ -50,7 +50,9 @@ void init()
     RND_GAME_OBJECT_ADD(ObjPlayer, OBJI_PLAYER);
     RND_ctors[OBJI_PLAYER] = objPlayerCtor;
     step_handler = RND_gameHandlerCreate(NULL);
+    draw_handler = RND_gameHandlerCreate(NULL);
     RND_gameHandlerAdd(step_handler, OBJI_PLAYER, objPlayerStep);
+    RND_gameHandlerAdd(draw_handler, OBJI_PLAYER, objPlayerDraw);
     running = true;
 }
 
@@ -101,8 +103,9 @@ void step()
 
 void draw()
 {
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderClear(renderer);
+    RND_gameHandlerRun(draw_handler);
     SDL_RenderPresent(renderer);
 }
 
