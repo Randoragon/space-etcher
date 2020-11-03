@@ -1,3 +1,8 @@
+/** @file
+ * Contains static definitions of object-related metadata,
+ * most notably all object indices (@c OBJI_*) reside here.
+ */
+
 #ifndef OBJ_MACROS_H
 #define OBJ_MACROS_H
 

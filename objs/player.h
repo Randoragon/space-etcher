@@ -1,3 +1,7 @@
+/** @file
+ * The object controlled by the player during the game.
+ */
+
 #ifndef OBJ_PLAYER_H
 #define OBJ_PLAYER_H
 

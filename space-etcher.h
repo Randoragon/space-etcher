@@ -1,3 +1,7 @@
+/** @file
+  * The main header file of the game.
+  */
+
 #ifndef SPACE_ETCHER_H
 #define SPACE_ETCHER_H
 
