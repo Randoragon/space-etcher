@@ -30,6 +30,7 @@ in your web browser.
 - [SDL2](https://libsdl.org)
 - [RND\_Game](https://github.com/randoragon/randoutils/tree/master/c-libs/game)
 - [RND\_BitMap](https://github.com/randoragon/randoutils/tree/master/c-libs/bitmap)
+- [Chipmunk](https://chipmunk-physics.net/)
 
 ## Installation
 

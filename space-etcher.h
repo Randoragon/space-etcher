@@ -9,6 +9,7 @@
 #include <stdbool.h>
 #include <RND_BitMap.h>
 #include <RND_Game.h>
+#include <chipmunk/chipmunk.h>
 
 
 /***********************************************************
