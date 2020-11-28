@@ -13,6 +13,7 @@ SDL_Window *window;
 SDL_Renderer *renderer;
 bool running;
 RND_GameHandler *step_handler, *draw_handler;
+cpSpace *main_space;
 
 void init()
 {
@@ -43,16 +44,24 @@ void init()
         RND_ERROR("Failed to create EventSnapshot\n");
         exit(1);
     }
+    if (!(main_space = cpSpaceNew())) {
+        RND_ERROR("Failed to create Chipmunk space\n");
+        exit(1);
+    }
     if (RND_gameInit()) {
         RND_ERROR("Failed to initialize RND_Game\n");
         exit(1);
     }
     RND_GAME_OBJECT_ADD(ObjPlayer, OBJI_PLAYER);
+    RND_GAME_OBJECT_ADD(ObjGround, OBJI_GROUND);
     RND_ctors[OBJI_PLAYER] = objPlayerCtor;
+    RND_ctors[OBJI_GROUND] = objGroundCtor;
+    RND_dtors[OBJI_GROUND] = objGroundDtor;
     step_handler = RND_gameHandlerCreate(NULL);
     draw_handler = RND_gameHandlerCreate(NULL);
     RND_gameHandlerAdd(step_handler, OBJI_PLAYER, objPlayerStep);
     RND_gameHandlerAdd(draw_handler, OBJI_PLAYER, objPlayerDraw);
+    RND_gameHandlerAdd(draw_handler, OBJI_GROUND, objGroundDraw);
     running = true;
 }
 
@@ -62,7 +71,9 @@ void loadResources()
 
 void gameBegin()
 {
+    RND_gameInstanceSpawn(OBJI_GROUND);
     RND_gameInstanceSpawn(OBJI_PLAYER);
+    cpSpaceSetGravity(main_space, cpv(0, GRAVITY));
 }
 
 void gameLoop()
@@ -103,6 +114,7 @@ void listen()
 void step()
 {
     RND_gameHandlerRun(step_handler);
+    cpSpaceStep(main_space, 1.0 / FPS);
 }
 
 void draw()
@@ -121,6 +133,7 @@ void cleanup()
     RND_gameCleanup();
     eventSnapshotDestroy(events);
     eventSnapshotDestroy(events_prev);
+    cpSpaceFree(main_space);
 }
 
 int main(int argc, char *argv[])

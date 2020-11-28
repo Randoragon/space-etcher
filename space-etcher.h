@@ -19,6 +19,7 @@
 #define CANVAS_WIDTH 1366
 #define CANVAS_HEIGHT 768
 #define FPS 60
+#define GRAVITY 1000
 
 
 /***********************************************************
@@ -106,5 +107,8 @@ extern RND_GameHandler *step_handler;
 
 /// Handler for instance draw event, executed in @ref draw.
 extern RND_GameHandler *draw_handler;
+
+/// Chipmunk physics engine space.
+extern cpSpace *main_space;
 
 #endif /* SPACE_ETCHER_H */

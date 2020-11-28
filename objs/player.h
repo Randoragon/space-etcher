@@ -5,11 +5,13 @@
 #ifndef OBJ_PLAYER_H
 #define OBJ_PLAYER_H
 
-#include "../space-etcher.h"
+#include <chipmunk/chipmunk.h>
 
 typedef struct ObjPlayer
 {
-    double x, y;
+    cpFloat radius;
+    cpBody  *body;
+    cpShape *shape;
 } ObjPlayer;
 
 int objPlayerCtor(void *obj);
