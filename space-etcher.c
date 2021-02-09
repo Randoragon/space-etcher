@@ -6,7 +6,7 @@
 #include <RND_BitArray.h>
 
 #include "space-etcher.h"
-#include "objs/include.h"
+#include "obj/include.h"
 #include "input.h"
 
 SDL_Window *window;

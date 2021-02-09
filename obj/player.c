@@ -7,9 +7,9 @@
 
 extern cpSpace *main_space;
 
-int objPlayerCtor(void *obj)
+int objPlayerCtor(void *self)
 {
-    ObjPlayer *o = obj;
+    ObjPlayer *o = self;
     o->radius = 50;
     cpFloat mass   = 1;
     cpFloat moment = cpMomentForCircle(mass, 0, o->radius, cpvzero);
@@ -23,17 +23,17 @@ int objPlayerCtor(void *obj)
     return 0;
 }
 
-int objPlayerStep(void *obj)
+int objPlayerStep(void *self)
 {
-    //ObjPlayer *o = obj;
+    //ObjPlayer *o = self;
     //o->x += 10 * (keyIsDown(KEY_RIGHT) - keyIsDown(KEY_LEFT));
     //o->y += 10 * (keyIsDown(KEY_CROUCH) - keyIsDown(KEY_JUMP));
     return 0;
 }
 
-int objPlayerDraw(void *obj)
+int objPlayerDraw(void *self)
 {
-    ObjPlayer *o = obj;
+    ObjPlayer *o = self;
     cpVect pos = cpBodyGetPosition(o->body);
     cpFloat ang = cpBodyGetAngle(o->body);
     filledCircleRGBA(renderer, pos.x, pos.y, o->radius, 0, 0, 0, 0xff);

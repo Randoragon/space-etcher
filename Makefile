@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Og -g
 LDFLAGS = -lSDL2 -lSDL2_gfx -lrnd_game -lrnd_bitarray -lrnd_priorityqueue -lrnd_linkedlist -lchipmunk -lm
-SRCS = $(wildcard *.c) $(wildcard objs/*.c)
+SRCS = $(wildcard *.c) $(wildcard obj/*.c)
 OBJS = $(patsubst %.c, %.o, $(SRCS))
 OUT = space-etcher
 DESTDIR = 
@@ -16,7 +16,7 @@ main: $(OBJS)
 	$(CC) -c $(CFLAGS) $^ -o $@
 
 clean:
-	rm -f *.o objs/*.o
+	rm -f *.o obj/*.o
 
 install: CFLAGS += -O3
 install: clean all
@@ -26,6 +26,6 @@ docs: FORCE
 	doxygen Doxyfile
 
 gen: FORCE
-	./objs/gen-include.sh
+	./obj/gen-include.sh
 
 FORCE: ;

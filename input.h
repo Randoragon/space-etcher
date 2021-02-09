@@ -169,4 +169,4 @@ inline bool keyIsReleased(EKeyIndex key)
         RND_bitArrayGet(events_prev->keyboard, key);
 }
 
-#endif // INPUT_H
+#endif /* INPUT_H */

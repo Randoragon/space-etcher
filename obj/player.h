@@ -18,5 +18,4 @@ int objPlayerCtor(void *obj);
 int objPlayerStep(void *obj);
 int objPlayerDraw(void *obj);
 
-#endif // OBJ_PLAYER_H
-
+#endif /* OBJ_PLAYER_H */

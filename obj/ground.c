@@ -4,9 +4,9 @@
 extern SDL_Renderer *renderer;
 extern cpSpace *main_space;
 
-int objGroundCtor(void *obj)
+int objGroundCtor(void *self)
 {
-    ObjGround *o = obj;
+    ObjGround *o = self;
     o->shape = cpSegmentShapeNew(cpSpaceGetStaticBody(main_space), cpv(0, CANVAS_HEIGHT - 70), cpv(CANVAS_WIDTH, CANVAS_HEIGHT - 30), 0);
     cpSpaceAddShape(main_space, o->shape);
     cpShapeSetFriction(o->shape, 0.8);
@@ -14,14 +14,14 @@ int objGroundCtor(void *obj)
     return 0;
 }
 
-int objGroundDtor(void *obj)
+int objGroundDtor(void *self)
 {
-    ObjGround *o = obj;
+    ObjGround *o = self;
     cpShapeFree(o->shape);
     return 0;
 }
 
-int objGroundDraw(void *obj)
+int objGroundDraw(void *self)
 {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     int y0 = 70, y1 = 30;

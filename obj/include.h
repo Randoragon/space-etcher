@@ -5,4 +5,4 @@
 #include "macros.h"
 #include "player.h"
 
-#endif // OBJ_INCLUDE_H
+#endif /* OBJ_INCLUDE_H */

@@ -8,8 +8,8 @@ typedef struct ObjGround
     cpShape *shape;
 } ObjGround;
 
-int objGroundCtor(void *obj);
-int objGroundDtor(void *obj);
-int objGroundDraw(void *obj);
+int objGroundCtor(void *self);
+int objGroundDtor(void *self);
+int objGroundDraw(void *self);
 
-#endif
+#endif /* OBJ_GROUND_H */

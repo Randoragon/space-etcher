@@ -9,4 +9,4 @@
 #define OBJI_PLAYER 0
 #define OBJI_GROUND 1
 
-#endif // OBJ_MACROS_H
+#endif /* OBJ_MACROS_H */
