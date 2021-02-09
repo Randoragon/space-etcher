@@ -25,7 +25,7 @@ int objPlayerCtor(void *obj)
 
 int objPlayerStep(void *obj)
 {
-    ObjPlayer *o = obj;
+    //ObjPlayer *o = obj;
     //o->x += 10 * (keyIsDown(KEY_RIGHT) - keyIsDown(KEY_LEFT));
     //o->y += 10 * (keyIsDown(KEY_CROUCH) - keyIsDown(KEY_JUMP));
     return 0;
@@ -36,10 +36,11 @@ int objPlayerDraw(void *obj)
     ObjPlayer *o = obj;
     cpVect pos = cpBodyGetPosition(o->body);
     cpFloat ang = cpBodyGetAngle(o->body);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_Rect r = {pos.x - o->radius, pos.y - o->radius, 2 * o->radius, 2 * o->radius};
-    SDL_RenderFillRect(renderer, &r);
+    filledCircleRGBA(renderer, pos.x, pos.y, o->radius, 0, 0, 0, 0xff);
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_RenderDrawLine(renderer, pos.x, pos.y, pos.x + o->radius * cos(ang), pos.y + o->radius * sin(ang));
+    SDL_RenderDrawLine(renderer, pos.x,
+                                 pos.y,
+                                 pos.x + o->radius * cos(ang),
+                                 pos.y + o->radius * sin(ang));
     return 0;
 }

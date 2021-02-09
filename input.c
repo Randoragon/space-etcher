@@ -11,7 +11,7 @@ EventSnapshot *eventSnapshotCreate()
         RND_ERROR("malloc");
         return NULL;
     }
-    if (!(ret->keyboard = RND_bitMapCreate(4))) {
+    if (!(ret->keyboard = RND_bitArrayCreate(4))) {
         RND_ERROR("Failed to create bitmap\n");
         free(ret);
         return NULL;
@@ -26,8 +26,8 @@ int eventSnapshotDestroy(EventSnapshot *es)
         return 1;
     }
     int code;
-    if ((code = RND_bitMapDestroy(es->keyboard))) {
-        RND_ERROR("Failed to destroy bitmap (RND_bitMapDestroy returned %d)\n", code);
+    if ((code = RND_bitArrayDestroy(es->keyboard))) {
+        RND_ERROR("Failed to destroy bitmap (RND_bitArrayDestroy returned %d)\n", code);
         return 1;
     }
     free(es);
@@ -58,5 +58,5 @@ void handleKey(SDL_KeyboardEvent kev)
             return;
     }
     pressed = (kev.state == SDL_PRESSED)? true : false; 
-    RND_bitMapSet(events->keyboard, index, pressed);
+    RND_bitArraySet(events->keyboard, index, pressed);
 }

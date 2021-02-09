@@ -3,7 +3,7 @@
 #include <SDL2/SDL.h>
 #include <RND_Game.h>
 #include <RND_ErrMsg.h>
-#include <RND_BitMap.h>
+#include <RND_BitArray.h>
 
 #include "space-etcher.h"
 #include "objs/include.h"
@@ -94,7 +94,7 @@ void listen()
 {
     for (int i = 0; i < KEY_SIZE; i++) {
         bool last = keyIsDown(i);
-        RND_bitMapSet(events_prev->keyboard, i, last);
+        RND_bitArraySet(events_prev->keyboard, i, last);
     }
     SDL_Event ev;
     while (SDL_PollEvent(&ev) > 0) {

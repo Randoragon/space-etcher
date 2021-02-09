@@ -28,8 +28,9 @@ in your web browser.
 ## Dependencies
 
 - [SDL2](https://libsdl.org)
-- [RND\_Game](https://github.com/randoragon/randoutils/tree/master/c-libs/game)
-- [RND\_BitMap](https://github.com/randoragon/randoutils/tree/master/c-libs/bitmap)
+- [SDL2\_gfx](https://www.ferzkopp.net/wordpress/2016/01/02/sdl_gfx-sdl2_gfx/)
+- [RND\_Game](https://github.com/randoragon/rnd-libs/tree/master/game)
+- [RND\_BitArray](https://github.com/randoragon/rnd-libs/tree/master/bitarray)
 - [Chipmunk](https://chipmunk-physics.net/)
 
 ## Installation

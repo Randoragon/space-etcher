@@ -6,8 +6,9 @@
 #define SPACE_ETCHER_H
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL2_gfxPrimitives.h>
 #include <stdbool.h>
-#include <RND_BitMap.h>
+#include <RND_BitArray.h>
 #include <RND_Game.h>
 #include <chipmunk/chipmunk.h>
 

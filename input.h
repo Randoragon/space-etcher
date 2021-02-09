@@ -7,7 +7,7 @@
 #define INPUT_H
 
 #include <SDL2/SDL.h>
-#include <RND_BitMap.h>
+#include <RND_BitArray.h>
 
 
 /***********************************************************
@@ -59,7 +59,7 @@ typedef struct EventSnapshot EventSnapshot;
 struct EventSnapshot
 {
     /// Binary values representing individual key states.
-    RND_BitMap *keyboard;
+    RND_BitArray *keyboard;
 };
 
 
@@ -120,7 +120,7 @@ void handleKey(SDL_KeyboardEvent kev);
  */
 inline bool keyIsDown(EKeyIndex key)
 {
-    return RND_bitMapGet(events->keyboard, key);
+    return RND_bitArrayGet(events->keyboard, key);
 }
 
 /** Returns whether a key has just been pressed or not.
@@ -142,8 +142,8 @@ inline bool keyIsDown(EKeyIndex key)
  */
 inline bool keyIsPressed(EKeyIndex key)
 {
-    return RND_bitMapGet(events->keyboard, key) &&
-        !RND_bitMapGet(events_prev->keyboard, key);
+    return RND_bitArrayGet(events->keyboard, key) &&
+        !RND_bitArrayGet(events_prev->keyboard, key);
 }
 
 /** Returns whether a key has just been released or not.
@@ -165,8 +165,8 @@ inline bool keyIsPressed(EKeyIndex key)
  */
 inline bool keyIsReleased(EKeyIndex key)
 {
-    return !RND_bitMapGet(events->keyboard, key) &&
-        RND_bitMapGet(events_prev->keyboard, key);
+    return !RND_bitArrayGet(events->keyboard, key) &&
+        RND_bitArrayGet(events_prev->keyboard, key);
 }
 
 #endif // INPUT_H
