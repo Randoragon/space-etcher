@@ -3,7 +3,10 @@
  * Snippets begin with "OS" for "Object Snippet".
  */
 
-/// Put inside struct body to include sprite related members.
+/********************************************************
+ *                 SPRITE FUNCTIONALITY                 *
+ ********************************************************/
+
 #define OS_SPRITE_DECL    \
     const Sprite   *spr;  \
     float    img_hscale;  \

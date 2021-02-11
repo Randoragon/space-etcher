@@ -12,11 +12,11 @@
 
 typedef struct ObjPlayer
 {
-    OS_SPRITE_DECL
-
     cpFloat radius;
     cpBody  *body;
     cpShape *shape;
+
+    OS_SPRITE_DECL
 } ObjPlayer;
 
 int objPlayerCtor(void *self);
