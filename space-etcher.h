@@ -29,9 +29,13 @@
  *                       CONSTANTS                         *
  ***********************************************************/
 
+/// The width of the window.
 #define CANVAS_WIDTH 1366
+/// The height of the window.
 #define CANVAS_HEIGHT 768
+/// In-game target frames per second.
 #define FPS 60
+/// In-game gravity value (for Chipmunk).
 #define GRAVITY 1000
 
 
