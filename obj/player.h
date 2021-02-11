@@ -7,15 +7,21 @@
 
 #include <chipmunk/chipmunk.h>
 
+#include "../sprite.h"
+#include "snippets.h"
+
 typedef struct ObjPlayer
 {
+    OS_SPRITE_DECL
+
     cpFloat radius;
     cpBody  *body;
     cpShape *shape;
 } ObjPlayer;
 
-int objPlayerCtor(void *obj);
-int objPlayerStep(void *obj);
-int objPlayerDraw(void *obj);
+int objPlayerCtor(void *self);
+int objPlayerDtor(void *self);
+int objPlayerStep(void *self);
+int objPlayerDraw(void *self);
 
 #endif /* OBJ_PLAYER_H */

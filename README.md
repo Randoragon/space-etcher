@@ -29,8 +29,10 @@ in your web browser.
 
 - [SDL2](https://libsdl.org)
 - [SDL2\_gfx](https://www.ferzkopp.net/wordpress/2016/01/02/sdl_gfx-sdl2_gfx/)
+- [SDL2\_image](https://www.libsdl.org/projects/SDL_image/)
 - [RND\_Game](https://github.com/randoragon/rnd-libs/tree/master/game)
 - [RND\_BitArray](https://github.com/randoragon/rnd-libs/tree/master/bitarray)
+- [RND\_HashMap](https://github.com/randoragon/rnd-libs/tree/master/hashmap)
 - [Chipmunk](https://chipmunk-physics.net/)
 
 ## Installation

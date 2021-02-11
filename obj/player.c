@@ -1,8 +1,10 @@
 #include <SDL2/SDL.h>
 #include <math.h>
 
-#include "../space-etcher.h"
 #include "player.h"
+#include "snippets.h"
+#include "../space-etcher.h"
+#include "../sprite.h"
 #include "../input.h"
 
 extern cpSpace *main_space;
@@ -10,8 +12,13 @@ extern cpSpace *main_space;
 int objPlayerCtor(void *self)
 {
     ObjPlayer *o = self;
+    OS_SPRITE_CTOR("candy_bullet");
     o->radius = 50;
-    cpFloat mass   = 1;
+    o->img_hscale = 2.0 * o->radius / o->spr->w;
+    o->img_vscale = 2.0 * o->radius / o->spr->h;
+    o->img_xorig  = o->spr->w / 2;
+    o->img_yorig  = o->spr->h / 2;
+    cpFloat mass = 1;
     cpFloat moment = cpMomentForCircle(mass, 0, o->radius, cpvzero);
     o->body = cpSpaceAddBody(main_space, cpBodyNew(mass, moment));
     cpBodySetPosition(o->body, cpv(CANVAS_WIDTH / 2.0, CANVAS_HEIGHT / 2.0));
@@ -23,11 +30,20 @@ int objPlayerCtor(void *self)
     return 0;
 }
 
+int objPlayerDtor(void *self)
+{
+    ObjPlayer *o = self;
+    cpBodyFree(o->body);
+    cpShapeFree(o->shape);
+    return 0;
+}
+
 int objPlayerStep(void *self)
 {
-    //ObjPlayer *o = self;
-    //o->x += 10 * (keyIsDown(KEY_RIGHT) - keyIsDown(KEY_LEFT));
-    //o->y += 10 * (keyIsDown(KEY_CROUCH) - keyIsDown(KEY_JUMP));
+    ObjPlayer *o = self;
+    OS_SPRITE_STEP;
+    cpFloat ang_rad = cpBodyGetAngle(o->body);
+    o->img_angle = ang_rad * 180 / M_PI;
     return 0;
 }
 
@@ -35,12 +51,6 @@ int objPlayerDraw(void *self)
 {
     ObjPlayer *o = self;
     cpVect pos = cpBodyGetPosition(o->body);
-    cpFloat ang = cpBodyGetAngle(o->body);
-    filledCircleRGBA(renderer, pos.x, pos.y, o->radius, 0, 0, 0, 0xff);
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_RenderDrawLine(renderer, pos.x,
-                                 pos.y,
-                                 pos.x + o->radius * cos(ang),
-                                 pos.y + o->radius * sin(ang));
+    OS_SPRITE_DRAW(pos.x, pos.y);
     return 0;
 }

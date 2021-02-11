@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Og -g
-LDFLAGS = -lSDL2 -lSDL2_gfx -lrnd_game -lrnd_bitarray -lrnd_priorityqueue -lrnd_linkedlist -lchipmunk -lm
+LDFLAGS = -lSDL2 -lSDL2_gfx -lSDL2_image -lrnd_game -lrnd_bitarray -lrnd_priorityqueue -lrnd_linkedlist -lrnd_hashmap -lchipmunk -lm
 SRCS = $(wildcard *.c) $(wildcard obj/*.c)
 OBJS = $(patsubst %.c, %.o, $(SRCS))
 OUT = space-etcher

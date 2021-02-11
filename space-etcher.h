@@ -10,8 +10,20 @@
 #include <stdbool.h>
 #include <RND_BitArray.h>
 #include <RND_Game.h>
+#include <RND_HashMap.h>
 #include <chipmunk/chipmunk.h>
 
+/********************************************************
+ *                         MACROS                       *
+ ********************************************************/
+
+/// Oneliner for adding sprites at the @ref loadResources stage.
+#define ADD_SPRITE(name, path, frames, speed) \
+    do { \
+        Sprite *spr; \
+        loadSpritesheet(&spr, path, frames, speed); \
+        RND_hashMapAdd(sprites, name, spr); \
+    } while (0)
 
 /***********************************************************
  *                       CONSTANTS                         *
@@ -111,5 +123,8 @@ extern RND_GameHandler *draw_handler;
 
 /// Chipmunk physics engine space.
 extern cpSpace *main_space;
+
+/// An map of all sprites.
+extern RND_HashMap *sprites;
 
 #endif /* SPACE_ETCHER_H */
