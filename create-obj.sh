@@ -37,7 +37,7 @@ printf "%s" \
 #include <chipmunk/chipmunk.h>
 
 #include \"../sprite.h\"
-#include \"snippets.h\"
+#include \"macros.h\"
 
 typedef struct Obj$pcase
 {
@@ -59,7 +59,7 @@ printf "%s" \
 #include <math.h>
 
 #include \"$hfile\"
-#include \"snippets.h\"
+#include \"macros.h\"
 #include \"../space-etcher.h\"
 #include \"../sprite.h\"
 #include \"../input.h\"
