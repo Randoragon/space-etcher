@@ -1,14 +1,10 @@
-/** @file
- * The object controlled by the player during the game.
- */
-
 #ifndef OBJ_PLAYER_H
 #define OBJ_PLAYER_H
 
 #include <chipmunk/chipmunk.h>
 
 #include "../sprite.h"
-#include "snippets.h"
+#include "macros.h"
 
 typedef struct ObjPlayer
 {

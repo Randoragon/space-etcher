@@ -2,7 +2,7 @@
 #include <math.h>
 
 #include "obj-player.h"
-#include "snippets.h"
+#include "macros.h"
 #include "../space-etcher.h"
 #include "../sprite.h"
 #include "../input.h"
