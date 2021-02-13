@@ -13,6 +13,7 @@
 typedef struct ObjPlayer
 {
     cpFloat radius;
+    float   pulse_clock;
     cpBody  *body;
     cpShape *shape;
 

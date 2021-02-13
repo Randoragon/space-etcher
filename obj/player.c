@@ -13,15 +13,17 @@ int objPlayerCtor(void *self)
 {
     ObjPlayer *o = self;
 
+    o->pulse_clock = 0.0;
+
     // Sprite
     OS_SPRITE_CTOR("candy_bullet");
-    o->radius = 50;
     o->img_hscale = 2.0 * o->radius / o->spr->w;
     o->img_vscale = 2.0 * o->radius / o->spr->h;
     o->img_xorig  = o->spr->w / 2;
     o->img_yorig  = o->spr->h / 2;
 
     // Physics
+    o->radius = 50;
     cpFloat mass = 1;
     cpFloat moment = cpMomentForCircle(mass, 0, o->radius, cpvzero);
     o->body = cpSpaceAddBody(main_space, cpBodyNew(mass, moment));
@@ -47,6 +49,10 @@ int objPlayerDtor(void *self)
 int objPlayerStep(void *self)
 {
     ObjPlayer *o = self;
+
+    o->img_hscale  = (2.0 * o->radius / o->spr->w) + sin(o->pulse_clock) * 0.6;
+    o->img_vscale  = (2.0 * o->radius / o->spr->h) + cos(o->pulse_clock) * 0.6;
+    o->pulse_clock = fmod(o->pulse_clock + 0.2, 2 * M_PI);
 
     OS_SPRITE_STEP;
 
