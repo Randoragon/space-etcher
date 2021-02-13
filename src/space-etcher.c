@@ -79,7 +79,7 @@ void init()
 
 void loadResources()
 {
-    ADD_SPRITE("candy_bullet", "img/spr_candy_bullet.png", 10, 0.5);
+    ADD_SPRITE("candy_bullet", "data/sprites/spr_candy_bullet.png", 10, 0.5);
 }
 
 void gameBegin()

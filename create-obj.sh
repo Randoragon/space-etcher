@@ -5,7 +5,7 @@
 # The name of the new object has to be passed as STDIN argument.
 # IMPORTANT: the object name should be passed in kebab-case.
 
-objdir=obj
+objdir=src/obj
 
 # Check for common errors
 [ $# -ne 1 ] && printf "create-obj: exactly 1 argument required (object name)\n" && exit 1

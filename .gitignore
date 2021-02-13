@@ -1,5 +1,8 @@
-*.o
-space-etcher
+# Directories
+/docs/
+/obj/
+
+# Files
+/space-etcher
 Session.vim
-docs
 tags

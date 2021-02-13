@@ -1,31 +1,46 @@
 CC = gcc
+LINKER = gcc
 CFLAGS = -Og -g
-LDFLAGS = -lSDL2 -lSDL2_gfx -lSDL2_image -lrnd_game -lrnd_bitarray -lrnd_priorityqueue -lrnd_linkedlist -lrnd_hashmap -lchipmunk -lm
-SRCS = $(wildcard *.c) $(wildcard obj/*.c)
-OBJS = $(patsubst %.c, %.o, $(SRCS))
-OUT = space-etcher
+LDFLAGS = -lSDL2 -lSDL2_gfx -lSDL2_image \
+		  -lrnd_game -lrnd_bitarray -lrnd_priorityqueue -lrnd_linkedlist -lrnd_hashmap \
+		  -lchipmunk -lm
+
+# All SRCDIR subdirectories that contain source files
+DIRS = . obj
+
+SRCDIR = src
+OBJDIR = obj
+SRCDIRS := $(foreach dir, $(DIRS), $(addprefix $(SRCDIR)/, $(dir)))
+OBJDIRS := $(foreach dir, $(DIRS), $(addprefix $(OBJDIR)/, $(dir)))
+SRCS := $(foreach dir, $(SRCDIRS), $(wildcard $(dir)/*.c))
+OBJS := $(patsubst $(SRCDIR)/%, $(OBJDIR)/%, $(SRCS:.c=.o))
+TARGET = space-etcher
 DESTDIR = 
 PREFIX = /usr/local/bin
 
-all: gen main
+.PHONY: directories all main clean install docs gen
+
+
+all: directories gen main
+
+directories:
+	mkdir -p $(SRCDIRS) $(OBJDIRS)
 
 main: $(OBJS)
-	$(CC) $(LDFLAGS) $(OBJS) -o $(OUT)
+	$(LINKER) $(LDFLAGS) $(OBJS) -o $(TARGET)
 
-%.o: %.c
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) -c $(CFLAGS) $^ -o $@
 
 clean:
-	rm -f *.o obj/*.o
+	rm -f $(OBJS)
 
 install: CFLAGS += -O3
 install: clean all
-	cp -- $(OUT) $(DESTDIR)$(PREFIX)/
+	cp -- $(TARGET) $(DESTDIR)$(PREFIX)/
 
-docs: FORCE
+docs:
 	doxygen Doxyfile
 
-gen: FORCE
-	./obj/gen-include.sh
-
-FORCE: ;
+gen:
+	./src/obj/gen-include.sh
