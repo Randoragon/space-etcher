@@ -6,11 +6,11 @@
 # IMPORTANT: the object name should be passed in kebab-case.
 
 objdir=src/objects
-objregex='^obj-[a-z-]\+\.h$'
+objregex='^[a-z-]\+$'
 
 # Check for common errors
 [ $# -ne 1 ] && printf "create-obj: exactly 1 argument required (object name)\n" && exit 1
-expr "$1" : "$objregex" >/dev/null || printf "create-obj: invalid object name (use kebab-case)\n" && exit 1
+expr "$1" : "$objregex" >/dev/null || { printf "create-obj: invalid object name (use kebab-case)\n" && exit 1; }
 [ -f "$objdir/$1.h" ] || [ -f "$objdir/$1.c" ] && printf "create-obj: object already exists\n" && exit 1
 
 # Cache filenames and casing styles
@@ -60,7 +60,7 @@ printf "%s" \
 "#include <SDL2/SDL.h>
 #include <math.h>
 
-#include \"$hfile\"
+#include \"${hfile#src/objects/}\"
 #include \"macros.h\"
 #include \"../space-etcher.h\"
 #include \"../sprite.h\"
