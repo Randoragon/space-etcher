@@ -6,7 +6,7 @@ LDFLAGS = -lSDL2 -lSDL2_gfx -lSDL2_image \
 		  -lchipmunk -lm
 
 # All SRCDIR subdirectories that contain source files
-DIRS = . obj
+DIRS = . objects
 
 SRCDIR = src
 OBJDIR = obj
@@ -43,4 +43,4 @@ docs:
 	doxygen Doxyfile
 
 gen:
-	./src/obj/gen-include.sh
+	./$(SRCDIR)/objects/gen-include.sh

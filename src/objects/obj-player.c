@@ -1,7 +1,7 @@
 #include <SDL2/SDL.h>
 #include <math.h>
 
-#include "player.h"
+#include "obj-player.h"
 #include "snippets.h"
 #include "../space-etcher.h"
 #include "../sprite.h"

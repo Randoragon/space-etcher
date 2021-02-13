@@ -5,16 +5,16 @@
 # The name of the new object has to be passed as STDIN argument.
 # IMPORTANT: the object name should be passed in kebab-case.
 
-objdir=src/obj
+objdir=src/objects
 
 # Check for common errors
 [ $# -ne 1 ] && printf "create-obj: exactly 1 argument required (object name)\n" && exit 1
 [ -f "$objdir/$1.h" ] || [ -f "$objdir/$1.c" ] && printf "create-obj: object already exists\n" && exit 1
 
 # Cache filenames and casing styles
-hfile="$objdir/$1.h"
-sfile="$objdir/$1.c"
-hguard="$(printf "%s" "$1" | tr '[:lower:]-' '[:upper:]_')_H"
+hfile="$objdir/obj-$1.h"
+sfile="$objdir/obj-$1.c"
+hguard="OBJ_$(printf "%s" "$1" | tr '[:lower:]-' '[:upper:]_')_H"
 pcase="$(printf "%s" "$1" | sed -r 's/(^|-)([a-z])/\U\2/g')"
 
 # Let the user verify everything is correct

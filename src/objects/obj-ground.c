@@ -1,5 +1,5 @@
 #include "../space-etcher.h"
-#include "ground.h"
+#include "obj-ground.h"
 
 extern SDL_Renderer *renderer;
 extern cpSpace *main_space;

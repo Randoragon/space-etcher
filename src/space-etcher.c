@@ -8,7 +8,7 @@
 #include <RND_HashMap.h>
 
 #include "space-etcher.h"
-#include "obj/include.h"
+#include "objects/include.h"
 #include "input.h"
 #include "sprite.h"
 
