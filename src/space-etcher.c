@@ -59,17 +59,8 @@ void init()
         RND_ERROR("Failed to initialize RND_Game");
         exit(1);
     }
-    RND_GAME_OBJECT_ADD(ObjPlayer, OBJI_PLAYER);
-    RND_GAME_OBJECT_ADD(ObjGround, OBJI_GROUND);
-    RND_ctors[OBJI_PLAYER] = objPlayerCtor;
-    RND_dtors[OBJI_PLAYER] = objPlayerDtor;
-    RND_ctors[OBJI_GROUND] = objGroundCtor;
-    RND_dtors[OBJI_GROUND] = objGroundDtor;
     step_handler = RND_gameHandlerCreate(NULL);
     draw_handler = RND_gameHandlerCreate(NULL);
-    RND_gameHandlerAdd(step_handler, OBJI_PLAYER, objPlayerStep);
-    RND_gameHandlerAdd(draw_handler, OBJI_PLAYER, objPlayerDraw);
-    RND_gameHandlerAdd(draw_handler, OBJI_GROUND, objGroundDraw);
     if (!(sprites = RND_hashMapCreate(4096, NULL))) {
         RND_ERROR("Failed to create sprites hashmap");
         exit(1);
@@ -79,6 +70,7 @@ void init()
 
 void loadResources()
 {
+    ADD_ALL_OBJECTS();
     ADD_SPRITE("candy_bullet", "data/sprites/spr_candy_bullet.png", 10, 0.5);
 }
 

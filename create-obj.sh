@@ -6,20 +6,22 @@
 # IMPORTANT: the object name should be passed in kebab-case.
 
 objdir=src/objects
+objregex='^obj-[a-z-]\+\.h$'
 
 # Check for common errors
 [ $# -ne 1 ] && printf "create-obj: exactly 1 argument required (object name)\n" && exit 1
+expr "$1" : "$objregex" >/dev/null || printf "create-obj: invalid object name (use kebab-case)\n" && exit 1
 [ -f "$objdir/$1.h" ] || [ -f "$objdir/$1.c" ] && printf "create-obj: object already exists\n" && exit 1
 
 # Cache filenames and casing styles
 hfile="$objdir/obj-$1.h"
 sfile="$objdir/obj-$1.c"
 hguard="OBJ_$(printf "%s" "$1" | tr '[:lower:]-' '[:upper:]_')_H"
-pcase="$(printf "%s" "$1" | sed -r 's/(^|-)([a-z])/\U\2/g')"
+pascal="$(printf "%s" "$1" | sed -r 's/(^|-)([a-z])/\U\2/g')"
 
 # Let the user verify everything is correct
 printf "INCLUDE_GUARD: %s\n" "$hguard"
-printf "PascalCase:    %s\n" "$pcase"
+printf "PascalCase:    %s\n" "$pascal"
 printf "continue? [Y\\\n] "
 read -r ans
 [ "$ans" = "N" ] || [ "$ans" = "n" ] && exit 0
@@ -39,15 +41,15 @@ printf "%s" \
 #include \"../sprite.h\"
 #include \"macros.h\"
 
-typedef struct Obj$pcase
+typedef struct Obj$pascal
 {
 
-} Obj$pcase;
+} Obj$pascal;
 
-int obj${pcase}Ctor(void *self);
-int obj${pcase}Dtor(void *self);
-int obj${pcase}Step(void *self);
-int obj${pcase}Draw(void *self);
+int obj${pascal}Ctor(void *self);
+int obj${pascal}Dtor(void *self);
+int obj${pascal}Step(void *self);
+int obj${pascal}Draw(void *self);
 
 #endif /* $hguard */" >"$hfile"
 printf "done.\n"
@@ -66,30 +68,30 @@ printf "%s" \
 
 extern cpSpace *main_space;
 
-int obj${pcase}Ctor(void *self)
+int obj${pascal}Ctor(void *self)
 {
-    Obj${pcase} *o = self;
+    Obj${pascal} *o = self;
 
     return 0;
 }
 
-int obj${pcase}Dtor(void *self)
+int obj${pascal}Dtor(void *self)
 {
-    Obj${pcase} *o = self;
+    Obj${pascal} *o = self;
 
     return 0;
 }
 
-int obj${pcase}Step(void *self)
+int obj${pascal}Step(void *self)
 {
-    Obj${pcase} *o = self;
+    Obj${pascal} *o = self;
 
     return 0;
 }
 
-int obj${pcase}Draw(void *self)
+int obj${pascal}Draw(void *self)
 {
-    Obj${pcase} *o = self;
+    Obj${pascal} *o = self;
 
     return 0;
 }" >"$sfile"

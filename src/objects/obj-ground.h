@@ -10,6 +10,7 @@ typedef struct ObjGround
 
 int objGroundCtor(void *self);
 int objGroundDtor(void *self);
+int objGroundStep(void *self);
 int objGroundDraw(void *self);
 
 #endif /* OBJ_GROUND_H */

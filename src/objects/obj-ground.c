@@ -25,6 +25,12 @@ int objGroundDtor(void *self)
     return 0;
 }
 
+int objGroundStep(void *self)
+{
+    ObjGround *o = self;
+
+    return 0;
+}
 int objGroundDraw(void *self)
 {
     // Draw ground line

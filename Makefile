@@ -43,4 +43,4 @@ docs:
 	doxygen Doxyfile
 
 gen:
-	./$(SRCDIR)/objects/gen-include.sh
+	./$(SRCDIR)/objects/generate.sh
