@@ -36,7 +36,7 @@
 /// In-game target frames per second.
 #define FPS 60
 /// In-game gravity value (for Chipmunk).
-#define GRAVITY 1000
+#define GRAVITY 640
 
 
 /***********************************************************

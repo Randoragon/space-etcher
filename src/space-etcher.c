@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <time.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <RND_Game.h>
@@ -76,8 +77,22 @@ void loadResources()
 
 void gameBegin()
 {
-    RND_gameInstanceSpawn(OBJI_GROUND);
-    RND_gameInstanceSpawn(OBJI_PLAYER);
+    srand(time(0));
+
+    // Spawn walls
+    RND_GameInstanceId id;
+    id = RND_gameInstanceSpawn(OBJI_WALL);
+    objWallSet(RND_instances[id].data,
+            (SDL_Point) { 0, 200 },
+            (SDL_Point) { CANVAS_WIDTH / 2, CANVAS_HEIGHT - 10 },
+            9);
+    id = RND_gameInstanceSpawn(OBJI_WALL);
+    objWallSet(RND_instances[id].data,
+            (SDL_Point) { CANVAS_WIDTH / 2, CANVAS_HEIGHT - 10 },
+            (SDL_Point) { CANVAS_WIDTH, 200 },
+            9);
+
+    id = RND_gameInstanceSpawn(OBJI_BALL_SPAWNER);
     cpSpaceSetGravity(main_space, cpv(0, GRAVITY));
 }
 
@@ -119,14 +134,20 @@ void listen()
 
 void step()
 {
-    RND_gameHandlerRun(step_handler);
+    int err;
+    if ((err = RND_gameHandlerRun(step_handler))) {
+        RND_ERROR("step handler returned %d", err);
+    }
 }
 
 void draw()
 {
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderClear(renderer);
-    RND_gameHandlerRun(draw_handler);
+    int err;
+    if ((err = RND_gameHandlerRun(draw_handler))) {
+        RND_ERROR("draw handler returned %d", err);
+    }
     SDL_RenderPresent(renderer);
 }
 

@@ -14,7 +14,7 @@ printf "%s" \
 "#ifndef OBJ_INCLUDE_H
 #define OBJ_INCLUDE_H
 
-#include \"objects/macros.h\"
+#include \"macros.h\"
 " >"$file"
 
 kebabs=
