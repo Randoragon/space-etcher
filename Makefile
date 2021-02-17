@@ -18,7 +18,7 @@ TARGET = space-etcher
 DESTDIR = 
 PREFIX = /usr/local/bin
 
-.PHONY: directories all main clean install docs gen
+.PHONY: directories all main clean install docs gen profile
 
 
 all: directories gen main
@@ -35,7 +35,12 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 clean:
 	rm -f $(OBJS)
 
+profile: CFLAGS += -pg
+profile: LDFLAGS += -pg
+profile: clean all
+
 install: CFLAGS += -O3
+install: LDFLAGS += -O3
 install: clean all
 	cp -- $(TARGET) $(DESTDIR)$(PREFIX)/
 

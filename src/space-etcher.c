@@ -72,12 +72,12 @@ void init()
 void loadResources()
 {
     ADD_ALL_OBJECTS();
-    ADD_SPRITE("candy_bullet", "data/sprites/spr_candy_bullet.png", 10, 0.5);
+    ADD_SPRITE("ball", "data/sprites/spr_ball.png", 38, 0.5);
 }
 
 void gameBegin()
 {
-    srand(time(0));
+    srand(0);
 
     // Spawn walls
     RND_GameInstanceId id;
@@ -93,6 +93,7 @@ void gameBegin()
             9);
 
     id = RND_gameInstanceSpawn(OBJI_BALL_SPAWNER);
+    RND_GAME_INST(id, ObjBallSpawner).self_id = id;
     cpSpaceSetGravity(main_space, cpv(0, GRAVITY));
 }
 

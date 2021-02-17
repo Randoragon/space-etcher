@@ -6,6 +6,7 @@
 #define OBJ_BALL_SPAWNER_H
 
 #include <chipmunk/chipmunk.h>
+#include <RND_Game.h>
 
 #include "../sprite.h"
 #include "macros.h"
@@ -14,6 +15,8 @@ typedef struct ObjBallSpawner
 {
     int count;
     float dir;
+    int moving_balls_count;
+    RND_GameInstanceId self_id;
 } ObjBallSpawner;
 
 int objBallSpawnerCtor(void *self);

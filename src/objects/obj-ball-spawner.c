@@ -14,8 +14,10 @@ int objBallSpawnerCtor(void *self)
 {
     ObjBallSpawner *o = self;
 
+    o->self_id = 0;
     o->count = 1000;
     o->dir = rand() % 360;
+    o->moving_balls_count = 0;
 
     return 0;
 }
@@ -36,17 +38,22 @@ int objBallSpawnerStep(void *self)
         RND_GameInstanceId id;
         id = RND_gameInstanceSpawn(OBJI_BALL);
         objBallSet(RND_instances[id].data,
+                o->self_id,
                 CANVAS_WIDTH / 2,
                 250,
                 (SDL_Color) { rand() % 255, rand() % 255, rand() % 255, 255 },
                 o->dir);
         id = RND_gameInstanceSpawn(OBJI_BALL);
         objBallSet(RND_instances[id].data,
+                o->self_id,
                 CANVAS_WIDTH / 2,
                 250,
                 (SDL_Color) { rand() % 255, rand() % 255, rand() % 255, 255 },
                 fmod(o->dir + 180, 360));
         o->count -= 2;
+        o->moving_balls_count += 2;
+    } else if (o->moving_balls_count == 0) {
+        running = false;
     }
     return 0;
 }
