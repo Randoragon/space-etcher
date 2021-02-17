@@ -41,14 +41,12 @@ int objBallSpawnerStep(void *self)
                 o->self_id,
                 CANVAS_WIDTH / 2,
                 250,
-                (SDL_Color) { rand() % 255, rand() % 255, rand() % 255, 255 },
                 o->dir);
         id = RND_gameInstanceSpawn(OBJI_BALL);
         objBallSet(RND_instances[id].data,
                 o->self_id,
                 CANVAS_WIDTH / 2,
                 250,
-                (SDL_Color) { rand() % 255, rand() % 255, rand() % 255, 255 },
                 fmod(o->dir + 180, 360));
         o->count -= 2;
         o->moving_balls_count += 2;

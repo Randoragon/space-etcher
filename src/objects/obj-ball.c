@@ -20,7 +20,7 @@ int objBallCtor(void *self)
     o->moving = 1;
 
     // Physics
-    o->radius = 8 + rand() % 6;
+    o->radius = 9 + rand() % 6;
     cpFloat mass = 5;
     cpFloat moment = cpMomentForCircle(mass, 0, o->radius * 2, cpvzero);
     o->body = cpSpaceAddBody(main_space, cpBodyNew(mass, moment));
@@ -36,7 +36,6 @@ int objBallCtor(void *self)
     OS_SPRITE_CTOR("ball");
     o->img_xorig = o->spr->w / 2;
     o->img_yorig = o->spr->h / 2;
-    o->color = (SDL_Color) { rand() % 255, rand() % 255, rand() % 255, 255 };
     o->img_hscale = (o->radius * 2) / o->spr->w;
     o->img_vscale = (o->radius * 2) / o->spr->h;
     o->anim_frame = rand() % 38;
@@ -62,10 +61,9 @@ int objBallStep(void *self)
 
     if (o->moving > 0) {
         cpVect pos = cpBodyGetPosition(o->body);
-        if (fabs(pos.x - o->prev_pos.x) <= 1 && fabs(pos.y - o->prev_pos.y) <= 1) {
+        if (fabs(pos.x - o->prev_pos.x) <= 0.3 && fabs(pos.y - o->prev_pos.y) <= 0.3) {
             if (++o->moving > 100) {
                 o->moving = 0;
-                o->color.a = 128;
                 RND_GAME_INST(o->spawner, ObjBallSpawner).moving_balls_count--;
             }
         } else {
@@ -90,12 +88,11 @@ int objBallDraw(void *self)
     return 0;
 }
 
-void objBallSet(ObjBall *o, RND_GameInstanceId spawner, uint32_t x, uint32_t y, SDL_Color color, float dir)
+void objBallSet(ObjBall *o, RND_GameInstanceId spawner, uint32_t x, uint32_t y, float dir)
 {
     cpBodySetPosition(o->body, cpv(x, y));
     o->spawner = spawner;
-    o->color = color;
-    cpFloat h = 500 * cos(dir * M_PI / 180);
+    cpFloat h = 600 * cos(dir * M_PI / 180);
     cpFloat w = 600 * sin(dir * M_PI / 180);
     cpVect v = { w, h };
     cpBodySetVelocity(o->body, v);

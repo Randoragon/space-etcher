@@ -91,6 +91,21 @@ void gameBegin()
             (SDL_Point) { CANVAS_WIDTH / 2, CANVAS_HEIGHT - 10 },
             (SDL_Point) { CANVAS_WIDTH, 200 },
             9);
+    id = RND_gameInstanceSpawn(OBJI_WALL);
+    objWallSet(RND_instances[id].data,
+            (SDL_Point) { 0, 0 },
+            (SDL_Point) { CANVAS_WIDTH, 0 },
+            9);
+    id = RND_gameInstanceSpawn(OBJI_WALL);
+    objWallSet(RND_instances[id].data,
+            (SDL_Point) { 0, 0 },
+            (SDL_Point) { 0, 200 },
+            9);
+    id = RND_gameInstanceSpawn(OBJI_WALL);
+    objWallSet(RND_instances[id].data,
+            (SDL_Point) { CANVAS_WIDTH, 0 },
+            (SDL_Point) { CANVAS_WIDTH, 200 },
+            9);
 
     id = RND_gameInstanceSpawn(OBJI_BALL_SPAWNER);
     RND_GAME_INST(id, ObjBallSpawner).self_id = id;
