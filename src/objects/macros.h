@@ -20,7 +20,7 @@
 #define OBJI_WALL 0
 #define OBJI_BALL 1
 #define OBJI_SQUARE 2
-#define OBJI_BALL_SPAWNER 3
+#define OBJI_SPAWNER 3
 
 
 /********************************************************

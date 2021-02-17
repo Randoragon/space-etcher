@@ -3,7 +3,7 @@
 
 #include "macros.h"
 #include "obj-ball.h"
-#include "obj-ball-spawner.h"
+#include "obj-spawner.h"
 #include "obj-square.h"
 #include "obj-wall.h"
 
@@ -14,11 +14,11 @@
         RND_dtors[OBJI_BALL] = objBallDtor; \
         RND_gameHandlerAdd(step_handler, OBJI_BALL, objBallStep); \
         RND_gameHandlerAdd(draw_handler, OBJI_BALL, objBallDraw); \
-        RND_GAME_OBJECT_ADD(ObjBallSpawner, OBJI_BALL_SPAWNER); \
-        RND_ctors[OBJI_BALL_SPAWNER] = objBallSpawnerCtor; \
-        RND_dtors[OBJI_BALL_SPAWNER] = objBallSpawnerDtor; \
-        RND_gameHandlerAdd(step_handler, OBJI_BALL_SPAWNER, objBallSpawnerStep); \
-        RND_gameHandlerAdd(draw_handler, OBJI_BALL_SPAWNER, objBallSpawnerDraw); \
+        RND_GAME_OBJECT_ADD(ObjSpawner, OBJI_SPAWNER); \
+        RND_ctors[OBJI_SPAWNER] = objSpawnerCtor; \
+        RND_dtors[OBJI_SPAWNER] = objSpawnerDtor; \
+        RND_gameHandlerAdd(step_handler, OBJI_SPAWNER, objSpawnerStep); \
+        RND_gameHandlerAdd(draw_handler, OBJI_SPAWNER, objSpawnerDraw); \
         RND_GAME_OBJECT_ADD(ObjSquare, OBJI_SQUARE); \
         RND_ctors[OBJI_SQUARE] = objSquareCtor; \
         RND_dtors[OBJI_SQUARE] = objSquareDtor; \

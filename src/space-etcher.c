@@ -73,6 +73,7 @@ void loadResources()
 {
     ADD_ALL_OBJECTS();
     ADD_SPRITE("ball", "data/sprites/spr_ball.png", 38, 0.5);
+    ADD_SPRITE("square", "data/sprites/spr_square.png", 38, 0.5);
 }
 
 void gameBegin()
@@ -107,8 +108,8 @@ void gameBegin()
             (SDL_Point) { CANVAS_WIDTH, 200 },
             9);
 
-    id = RND_gameInstanceSpawn(OBJI_BALL_SPAWNER);
-    RND_GAME_INST(id, ObjBallSpawner).self_id = id;
+    id = RND_gameInstanceSpawn(OBJI_SPAWNER);
+    RND_GAME_INST(id, ObjSpawner).self_id = id;
     cpSpaceSetGravity(main_space, cpv(0, GRAVITY));
 }
 

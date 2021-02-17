@@ -1,8 +1,7 @@
 #include <SDL2/SDL.h>
 #include <math.h>
-#include <stdbool.h>
 
-#include "obj-ball.h"
+#include "obj-square.h"
 #include "obj-spawner.h"
 #include "macros.h"
 #include "../space-etcher.h"
@@ -10,22 +9,22 @@
 #include "../input.h"
 
 extern cpSpace *main_space;
-extern SDL_Renderer *renderer;
 
-int objBallCtor(void *self)
+int objSquareCtor(void *self)
 {
-    ObjBall *o = self;
+    ObjSquare *o = self;
 
     o->spawner = 0;
     o->moving = 1;
 
     // Physics
-    o->radius = 9 + rand() % 6;
+    o->w = 18 + rand() % 12;
+    o->h = o->w;
     cpFloat mass = 5;
-    cpFloat moment = cpMomentForCircle(mass, 0, o->radius * 2, cpvzero);
+    cpFloat moment = cpMomentForBox(mass, o->w, o->h);
     o->body = cpSpaceAddBody(main_space, cpBodyNew(mass, moment));
     cpBodySetPosition(o->body, cpv(CANVAS_WIDTH / 2.0, 50));
-    o->shape = cpSpaceAddShape(main_space, cpCircleShapeNew(o->body, o->radius, cpvzero));
+    o->shape = cpSpaceAddShape(main_space, cpBoxShapeNew(o->body, o->w, o->h, 0));
     cpShapeSetFriction(o->shape, 0.7);
     cpBodySetAngle(o->body, fmod(rand(), 2 * M_PI));
     cpBodySetAngularVelocity(o->body, M_PI * ((float)((rand() % 30) - 15)));
@@ -33,19 +32,19 @@ int objBallCtor(void *self)
     o->prev_pos = cpBodyGetPosition(o->body);
 
     // Sprite
-    OS_SPRITE_CTOR("ball");
+    OS_SPRITE_CTOR("square");
     o->img_xorig = o->spr->w / 2;
     o->img_yorig = o->spr->h / 2;
-    o->img_hscale = (o->radius * 2) / o->spr->w;
-    o->img_vscale = (o->radius * 2) / o->spr->h;
+    o->img_hscale = o->w / o->spr->w;
+    o->img_vscale = o->h / o->spr->h;
     o->anim_frame = rand() % 38;
 
     return 0;
 }
 
-int objBallDtor(void *self)
+int objSquareDtor(void *self)
 {
-    ObjBall *o = self;
+    ObjSquare *o = self;
 
     cpShapeFree(o->shape);
     cpBodyFree(o->body);
@@ -53,9 +52,9 @@ int objBallDtor(void *self)
     return 0;
 }
 
-int objBallStep(void *self)
+int objSquareStep(void *self)
 {
-    ObjBall *o = self;
+    ObjSquare *o = self;
 
     OS_SPRITE_STEP;
 
@@ -75,9 +74,9 @@ int objBallStep(void *self)
     return 0;
 }
 
-int objBallDraw(void *self)
+int objSquareDraw(void *self)
 {
-    ObjBall *o = self;
+    ObjSquare *o = self;
 
     // Draw self
     cpVect pos = cpBodyGetPosition(o->body);
@@ -85,10 +84,11 @@ int objBallDraw(void *self)
     o->img_angle = ang * 180 / M_PI;
     OS_SPRITE_DRAW(pos.x, pos.y);
 
+
     return 0;
 }
 
-void objBallSet(ObjBall *o, RND_GameInstanceId spawner, uint32_t x, uint32_t y, float dir)
+void objSquareSet(ObjSquare *o, RND_GameInstanceId spawner, uint32_t x, uint32_t y, float dir)
 {
     cpBodySetPosition(o->body, cpv(x, y));
     o->spawner = spawner;

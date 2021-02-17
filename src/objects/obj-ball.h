@@ -8,7 +8,6 @@
 #include <SDL2/SDL.h>
 #include <chipmunk/chipmunk.h>
 #include <RND_Game.h>
-#include <stdbool.h>
 
 #include "../sprite.h"
 #include "macros.h"
