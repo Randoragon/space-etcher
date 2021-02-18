@@ -1,3 +1,4 @@
+#include <RND_Game.h>
 #include <SDL2/SDL.h>
 #include <math.h>
 
@@ -10,9 +11,9 @@
 
 extern cpSpace *main_space;
 
-int objSquareCtor(void *self)
+int objSquareCtor(RND_GameInstance *self)
 {
-    ObjSquare *o = self;
+    ObjSquare *o = self->data;
 
     o->spawner = 0;
     o->moving = 1;
@@ -42,9 +43,9 @@ int objSquareCtor(void *self)
     return 0;
 }
 
-int objSquareDtor(void *self)
+int objSquareDtor(RND_GameInstance *self)
 {
-    ObjSquare *o = self;
+    ObjSquare *o = self->data;
 
     cpShapeFree(o->shape);
     cpBodyFree(o->body);
@@ -52,9 +53,9 @@ int objSquareDtor(void *self)
     return 0;
 }
 
-int objSquareStep(void *self)
+int objSquareStep(RND_GameInstance *self)
 {
-    ObjSquare *o = self;
+    ObjSquare *o = self->data;
 
     OS_SPRITE_STEP;
 
@@ -74,9 +75,9 @@ int objSquareStep(void *self)
     return 0;
 }
 
-int objSquareDraw(void *self)
+int objSquareDraw(RND_GameInstance *self)
 {
-    ObjSquare *o = self;
+    ObjSquare *o = self->data;
 
     // Draw self
     cpVect pos = cpBodyGetPosition(o->body);

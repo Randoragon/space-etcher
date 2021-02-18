@@ -1,3 +1,4 @@
+#include <RND_Game.h>
 #include <SDL2/SDL.h>
 #include <math.h>
 
@@ -10,9 +11,9 @@
 
 extern cpSpace *main_space;
 
-int objSpawnerCtor(void *self)
+int objSpawnerCtor(RND_GameInstance *self)
 {
-    ObjSpawner *o = self;
+    ObjSpawner *o = self->data;
 
     o->self_id = 0;
     o->count = 1000;
@@ -22,16 +23,16 @@ int objSpawnerCtor(void *self)
     return 0;
 }
 
-int objSpawnerDtor(void *self)
+int objSpawnerDtor(RND_GameInstance *self)
 {
-    ObjSpawner *o = self;
+    ObjSpawner *o = self->data;
 
     return 0;
 }
 
-int objSpawnerStep(void *self)
+int objSpawnerStep(RND_GameInstance *self)
 {
-    ObjSpawner *o = self;
+    ObjSpawner *o = self->data;
 
     if (o->count > 0) {
         o->dir = fmod(o->dir + 15, 360);
@@ -61,9 +62,9 @@ int objSpawnerStep(void *self)
     return 0;
 }
 
-int objSpawnerDraw(void *self)
+int objSpawnerDraw(RND_GameInstance *self)
 {
-    ObjSpawner *o = self;
+    ObjSpawner *o = self->data;
 
     return 0;
 }

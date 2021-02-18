@@ -1,3 +1,4 @@
+#include <RND_Game.h>
 #include <SDL2/SDL.h>
 #include <math.h>
 
@@ -10,18 +11,18 @@
 extern cpSpace *main_space;
 extern SDL_Renderer *renderer;
 
-int objWallCtor(void *self)
+int objWallCtor(RND_GameInstance *self)
 {
-    ObjWall *o = self;
+    ObjWall *o = self->data;
 
     o->shape = NULL;
 
     return 0;
 }
 
-int objWallDtor(void *self)
+int objWallDtor(RND_GameInstance *self)
 {
-    ObjWall *o = self;
+    ObjWall *o = self->data;
 
     if (o->shape != NULL) {
         cpShapeFree(o->shape);
@@ -30,16 +31,16 @@ int objWallDtor(void *self)
     return 0;
 }
 
-int objWallStep(void *self)
+int objWallStep(RND_GameInstance *self)
 {
-    ObjWall *o = self;
+    ObjWall *o = self->data;
 
     return 0;
 }
 
-int objWallDraw(void *self)
+int objWallDraw(RND_GameInstance *self)
 {
-    ObjWall *o = self;
+    ObjWall *o = self->data;
 
     // Draw line
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);

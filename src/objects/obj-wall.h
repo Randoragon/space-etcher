@@ -5,6 +5,7 @@
 #ifndef OBJ_WALL_H
 #define OBJ_WALL_H
 
+#include <RND_Game.h>
 #include <chipmunk/chipmunk.h>
 
 #include <SDL2/SDL.h>
@@ -18,10 +19,10 @@ typedef struct ObjWall
     cpShape *shape;
 } ObjWall;
 
-int objWallCtor(void *self);
-int objWallDtor(void *self);
-int objWallStep(void *self);
-int objWallDraw(void *self);
+int objWallCtor(RND_GameInstance *self);
+int objWallDtor(RND_GameInstance *self);
+int objWallStep(RND_GameInstance *self);
+int objWallDraw(RND_GameInstance *self);
 
 void objWallSet(ObjWall *o, SDL_Point p1, SDL_Point p2, float thickness);
 

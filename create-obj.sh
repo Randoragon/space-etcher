@@ -36,6 +36,7 @@ printf "%s" \
 #ifndef $hguard
 #define $hguard
 
+#include <RND_Game.h>
 #include <chipmunk/chipmunk.h>
 
 #include \"../sprite.h\"
@@ -46,10 +47,10 @@ typedef struct Obj$pascal
 
 } Obj$pascal;
 
-int obj${pascal}Ctor(void *self);
-int obj${pascal}Dtor(void *self);
-int obj${pascal}Step(void *self);
-int obj${pascal}Draw(void *self);
+int obj${pascal}Ctor(RND_GameInstance *self);
+int obj${pascal}Dtor(RND_GameInstance *self);
+int obj${pascal}Step(RND_GameInstance *self);
+int obj${pascal}Draw(RND_GameInstance *self);
 
 #endif /* $hguard */" >"$hfile"
 printf "done.\n"
@@ -57,7 +58,8 @@ printf "done.\n"
 # Generate the source file
 printf "Generating %s... " "$sfile"
 printf "%s" \
-"#include <SDL2/SDL.h>
+"#include <RND_Game.h>
+#include <SDL2/SDL.h>
 #include <math.h>
 
 #include \"${hfile#src/objects/}\"
@@ -68,30 +70,30 @@ printf "%s" \
 
 extern cpSpace *main_space;
 
-int obj${pascal}Ctor(void *self)
+int obj${pascal}Ctor(RND_GameInstance *self)
 {
-    Obj${pascal} *o = self;
+    Obj${pascal} *o = self->data;
 
     return 0;
 }
 
-int obj${pascal}Dtor(void *self)
+int obj${pascal}Dtor(RND_GameInstance *self)
 {
-    Obj${pascal} *o = self;
+    Obj${pascal} *o = self->data;
 
     return 0;
 }
 
-int obj${pascal}Step(void *self)
+int obj${pascal}Step(RND_GameInstance *self)
 {
-    Obj${pascal} *o = self;
+    Obj${pascal} *o = self->data;
 
     return 0;
 }
 
-int obj${pascal}Draw(void *self)
+int obj${pascal}Draw(RND_GameInstance *self)
 {
-    Obj${pascal} *o = self;
+    Obj${pascal} *o = self->data;
 
     return 0;
 }" >"$sfile"

@@ -1,3 +1,4 @@
+#include <RND_Game.h>
 #include <SDL2/SDL.h>
 #include <math.h>
 #include <stdbool.h>
@@ -12,9 +13,9 @@
 extern cpSpace *main_space;
 extern SDL_Renderer *renderer;
 
-int objBallCtor(void *self)
+int objBallCtor(RND_GameInstance *self)
 {
-    ObjBall *o = self;
+    ObjBall *o = self->data;
 
     o->spawner = 0;
     o->moving = 1;
@@ -43,9 +44,9 @@ int objBallCtor(void *self)
     return 0;
 }
 
-int objBallDtor(void *self)
+int objBallDtor(RND_GameInstance *self)
 {
-    ObjBall *o = self;
+    ObjBall *o = self->data;
 
     cpShapeFree(o->shape);
     cpBodyFree(o->body);
@@ -53,9 +54,9 @@ int objBallDtor(void *self)
     return 0;
 }
 
-int objBallStep(void *self)
+int objBallStep(RND_GameInstance *self)
 {
-    ObjBall *o = self;
+    ObjBall *o = self->data;
 
     OS_SPRITE_STEP;
 
@@ -75,9 +76,9 @@ int objBallStep(void *self)
     return 0;
 }
 
-int objBallDraw(void *self)
+int objBallDraw(RND_GameInstance *self)
 {
-    ObjBall *o = self;
+    ObjBall *o = self->data;
 
     // Draw self
     cpVect pos = cpBodyGetPosition(o->body);
