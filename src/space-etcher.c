@@ -40,7 +40,7 @@ void init()
         RND_ERROR("Failed to create window (%s)", SDL_GetError());
         exit(1);
     }
-    renderer = SDL_CreateRenderer(window, -1, 0);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (renderer == NULL) {
         RND_ERROR("Failed to create renderer (%s)", SDL_GetError());
         exit(1);
