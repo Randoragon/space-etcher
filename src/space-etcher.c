@@ -7,6 +7,7 @@
 #include <RND_ErrMsg.h>
 #include <RND_BitArray.h>
 #include <RND_HashMap.h>
+#include <RND_Utils.h>
 
 #include "space-etcher.h"
 #include "objects/include.h"
@@ -115,12 +116,30 @@ void gameBegin()
 
 void gameLoop()
 {
+    double t  = 0.0,
+           dt = 1.0 / FPS,
+           prev_time,
+           accumulator;
+    prev_time = RND_getWallTime_usec() / 1e6;
+    accumulator = 0.0;
+
     while (running) {
-        listen();
-        step();
+        double new_time, frame_time;
+        new_time   = RND_getWallTime_usec() / 1e6;
+        frame_time = new_time - prev_time;
+        prev_time  = new_time;
+        accumulator += frame_time;
+
+        while (accumulator >= dt) {
+            listen();
+            cpSpaceStep(main_space, dt);
+            step();
+            accumulator -= dt;
+            t += dt;
+        }
+
         draw();
-        cpSpaceStep(main_space, 1.0 / FPS);
-        SDL_Delay(1000 / FPS);
+        SDL_Delay(1);
     }
 }
 
