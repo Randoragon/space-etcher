@@ -116,8 +116,7 @@ void gameBegin()
 
 void gameLoop()
 {
-    double t  = 0.0,
-           dt = 1.0 / FPS,
+    double dt = 1.0 / FPS,
            prev_time,
            accumulator;
     prev_time = RND_getWallTime_usec() / 1e6;
@@ -130,16 +129,19 @@ void gameLoop()
         prev_time  = new_time;
         accumulator += frame_time;
 
+        int timeout = 0;
         while (accumulator >= dt) {
             listen();
             cpSpaceStep(main_space, dt);
             step();
             accumulator -= dt;
-            t += dt;
+            if (++timeout > 5) {
+                // cap repetitions to avoid the "spiral of death"
+                accumulator = 0;
+            }
         }
 
         draw();
-        SDL_Delay(1);
     }
 }
 
