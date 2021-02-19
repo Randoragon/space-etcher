@@ -91,14 +91,15 @@ void listen();
  */
 void step();
 
-/** Draws the current game state to the screen.
+/** Draws the current game state to a texture.
  *
- * This function updates the screen, and along with @ref listen
- * and @ref step is one of the vital components of @ref gameLoop.
- * It should be called after @ref step, because the state of
- * all object variables etc. should be up-to-date.
+ * This function is used to updates the screen, and along with
+ * @ref listen and @ref step is one of the vital components of
+ * @ref gameLoop.  It should be called after @ref step, because
+ * the state of all object variables etc. should be up-to-date.
+ * @param[out] target An initialized texture to draw to.
  */
-void draw();
+void draw(SDL_Texture *target);
 
 /** Frees all resources and prepares the game for an exit.
  *

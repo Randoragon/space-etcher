@@ -116,9 +116,26 @@ void gameBegin()
 
 void gameLoop()
 {
+    /* This entire function is heavily based on the "Fix Your Timestep!" article
+     * written by Glenn Fiedler. Read the article here:
+     * https://www.gafferongames.com/post/fix_your_timestep/
+     */
+
+    // For wall-clock time tracking and adjustments
     double dt = 1.0 / FPS,
            prev_time,
            accumulator;
+
+    // Textures for alpha blending previous and current frame
+    SDL_Texture *last_tex, *current_tex;
+    Uint32 format = SDL_GetWindowPixelFormat(window);
+    last_tex    = SDL_CreateTexture(renderer, format, SDL_TEXTUREACCESS_TARGET,
+            CANVAS_WIDTH, CANVAS_HEIGHT);
+    current_tex = SDL_CreateTexture(renderer, format, SDL_TEXTUREACCESS_TARGET,
+            CANVAS_WIDTH, CANVAS_HEIGHT);
+    SDL_SetTextureBlendMode(current_tex, SDL_BLENDMODE_BLEND);
+    SDL_SetTextureBlendMode(last_tex, SDL_BLENDMODE_BLEND);
+
     prev_time = RND_getWallTime_usec() / 1e6;
     accumulator = 0.0;
 
@@ -135,13 +152,29 @@ void gameLoop()
             cpSpaceStep(main_space, dt);
             step();
             accumulator -= dt;
+            // cap repetitions to avoid the "spiral of death"
             if (++timeout > 5) {
-                // cap repetitions to avoid the "spiral of death"
                 accumulator = 0;
             }
         }
 
-        draw();
+        // Swap current and last textures
+        SDL_Texture *tmp;
+        tmp = current_tex;
+        current_tex = last_tex;
+        last_tex = tmp;
+
+        // Draw state to current texture
+        draw(current_tex);
+
+        // Blend current and last textures for smoothing effect
+        Uint8 alpha = 255.0 * accumulator / dt;
+        SDL_SetTextureAlphaMod(last_tex, 255 - alpha);
+        SDL_RenderCopy(renderer, last_tex, NULL, NULL);
+        SDL_SetTextureAlphaMod(current_tex, alpha);
+        SDL_RenderCopy(renderer, current_tex, NULL, NULL);
+
+        SDL_RenderPresent(renderer);
     }
 }
 
@@ -178,15 +211,16 @@ void step()
     }
 }
 
-void draw()
+void draw(SDL_Texture *target)
 {
+    SDL_SetRenderTarget(renderer, target);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderClear(renderer);
     int err;
     if ((err = RND_gameHandlerRun(draw_handler))) {
         RND_ERROR("draw handler returned %d", err);
     }
-    SDL_RenderPresent(renderer);
+    SDL_SetRenderTarget(renderer, NULL);
 }
 
 void cleanup()
