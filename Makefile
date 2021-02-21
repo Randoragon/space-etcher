@@ -3,7 +3,7 @@ LINKER = gcc
 CFLAGS = -Og -g
 LDFLAGS = -lSDL2 -lSDL2_gfx -lSDL2_image \
 		  -lrnd_game -lrnd_bitarray -lrnd_priorityqueue -lrnd_linkedlist -lrnd_hashmap -lrnd_utils \
-		  -lchipmunk -lm
+		  -lchipmunk -lm 
 
 # All SRCDIR subdirectories that contain source files
 DIRS = . objects
@@ -27,7 +27,7 @@ directories:
 	mkdir -p $(SRCDIRS) $(OBJDIRS)
 
 main: $(OBJS)
-	$(LINKER) $(LDFLAGS) $(OBJS) -o $(TARGET)
+	$(LINKER) $(OBJS) $(LDFLAGS) -o $(TARGET)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) -c $(CFLAGS) $^ -o $@
