@@ -59,6 +59,7 @@ printf "done.\n"
 printf "Generating %s... " "$sfile"
 printf "%s" \
 "#include <RND_Game.h>
+#include <chipmunk/chipmunk.h>
 #include <SDL2/SDL.h>
 #include <math.h>
 
@@ -69,6 +70,8 @@ printf "%s" \
 #include \"../input.h\"
 
 extern cpSpace *main_space;
+extern SDL_Renderer *renderer;
+extern SDL_Window *window;
 
 int obj${pascal}Ctor(RND_GameInstance *self)
 {
