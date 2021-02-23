@@ -1,6 +1,6 @@
 CC = gcc
 LINKER = gcc
-CFLAGS = -Og -g
+CFLAGS = -pedantic -Og -g
 LDFLAGS = -lSDL2 -lSDL2_gfx -lSDL2_image \
 		  -lrnd_game -lrnd_bitarray -lrnd_priorityqueue -lrnd_linkedlist -lrnd_hashmap -lrnd_utils \
 		  -lchipmunk -lm 
